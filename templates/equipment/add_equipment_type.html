@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Equipment Type</title>
+    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
+</head>
+<body>
+    <h1>Equipment Type</h1>
+    <a href="{% url 'add_equipment_type' %}"><button>Add New Record</button></a>
+    <!-- Add your form to edit the monitoring station here -->
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div class="form-group">
+            <label for="id_last_update">Last update:</label>
+            <input type="datetime-local" id="id_last_update" name="last_update">
+        </div>
+        <button type="submit">Save</button>
+    </form>
+    <a href="{% url 'equipment_type' %}"><button>Back</button></a>
+
+    <!-- JavaScript to autofill the Last update field -->
+    <script>
+        // Get the input field for Last update
+        const lastUpdateField = document.getElementById('id_last_update');
+
+        // Function to get the current datetime in the required format (YYYY-MM-DDTHH:mm)
+        function getCurrentDateTime() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            return `${year}-${month}-${day}T${hours}:${minutes}`;
+        }
+
+        // Set the value of the input field with the current datetime when the page loads
+        lastUpdateField.value = getCurrentDateTime();
+    </script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Monitoring Stations</title>
+    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
+</head>
+<body>
+    <h1>Monitoring Stations</h1>
+    <a href="{% url 'add_monitoring_station' %}"><button>Add New Record</button></a>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>UUID</th>
+            <th>Last Update</th>
+            <th>Last Update By</th>
+            <th>Name</th>
+            <th>Image</th>
+            <th>Model</th>
+            <th>Equipment Type UUID</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+        {% for station in object_list %}
+        <tr>
+            <td>{{ station.id }}</td>
+            <td>{{ station.uuid }}</td>
+            <td>{{ station.last_update }}</td>
+            <td>{{ station.last_update_by }}</td>
+            <td>{{ station.name }}</td>
+            <td>{{ station.image }}</td>
+            <td>{{ station.model }}</td>
+            <td>{{ station.equipment_type_uuid }}</td>
+            <td><a href="{% url 'edit_monitoring_station' station.pk %}">Edit</a></td>
+            <td><a href="{% url 'delete_monitoring_station' station.pk %}">Delete</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <a href="{% url 'myapp' %}"><button>Back</button></a>
+</body>
+</html>

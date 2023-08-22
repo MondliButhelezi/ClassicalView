@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Monitoring Stations</title>
+    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+   integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+   crossorigin=""/>
+</head>
+<body>
+     <!-- Make sure you put this AFTER Leaflet's CSS -->
+ <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+   integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+   crossorigin=""></script>
+
+    <h1>Monitoring Stations</h1>
+    <a href="{% url 'add_monitoring_station' %}"><button>Add New Record</button></a>
+    <!-- Add your form to edit the monitoring station here -->
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div class="form-group">
+            <label for="id_last_update">Last update:</label>
+            <input type="datetime-local" id="id_last_update" name="last_update">
+        </div>
+        <button type="submit">Save</button>
+    </form>
+    <a href="{% url 'monitoring_stations' %}"><button>Back</button></a>
+     <div id="map"></div>
+
+    <!-- JavaScript to autofill the Last update field -->
+    <script>
+        // Get the input field for Last update
+        const lastUpdateField = document.getElementById('id_last_update');
+
+        // Function to get the current datetime in the required format (YYYY-MM-DDTHH:mm)
+        function getCurrentDateTime() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            return `${year}-${month}-${day}T${hours}:${minutes}`;
+        }
+
+        // Set the value of the input field with the current datetime when the page loads
+        lastUpdateField.value = getCurrentDateTime();
+    </script>
+</body>
+</html>
